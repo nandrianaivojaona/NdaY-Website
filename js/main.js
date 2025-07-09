@@ -73,6 +73,23 @@ const menuData = [
                     photo: "./assets/images/Projects/Testimonies/NdaY_Jejo.png"
                 },
                 link: "https://nday.mg/nday_hety"
+            },
+            {
+                label: "NdaY'Catholic Liberstatus",
+                image: "./assets/images/Projects/NdaY_Liberstatus.png",
+                summary: "A comprehensive digital platform for Catholic community management and spiritual guidance",
+                description: [
+                    "A digital platform designed to strengthen Catholic communities through enhanced communication and spiritual resources.",
+                    "Facilitates parish management, event coordination, and spiritual guidance for Catholic communities.",
+                    "Empowers clergy and lay leaders with tools for community engagement and pastoral care.",
+                    "Delivered with security, trust, and reverence for Catholic traditions and values."
+                ],
+                testimony: {
+                    text: "NdaY'Catholic Liberstatus has transformed how our parish connects and serves our community.",
+                    source: "Father Michel, Parish Priest at St. Joseph Cathedral",
+                    photo: "./assets/images/Projects/Testimonies/NdaY_Mom.png"
+                },
+                link: "https://nday.mg/nday_liberstatus"
             }
         ]
     },
@@ -115,6 +132,15 @@ const menuData = [
     }
 ];
 
+// Global closeOverlay function - used by both content overlays and project modals
+function closeOverlay() {
+    const overlay = document.querySelector(".content-overlay");
+    if (overlay) {
+        overlay.classList.remove("active");
+        setTimeout(() => overlay.remove(), 500); // Match CSS transition
+    }
+}
+
 // DOM Initialization
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM loaded, initializing menu...");
@@ -156,14 +182,6 @@ function initializeHorizontalMenu() {
 
     function toggleBackground(hide = true) {
         document.body.classList.toggle("hide-background", hide);
-    }
-
-    function closeOverlay() {
-        const overlay = document.querySelector(".content-overlay");
-        if (overlay) {
-            overlay.classList.remove("active");
-            setTimeout(() => overlay.remove(), 500); // Match CSS transition
-        }
     }
 
     menuData.forEach((menuItem) => {
@@ -309,16 +327,24 @@ function updateProjectContent(submenuItem, projectContent, submenuButton) {
     const submenuRight = submenuRect.left + parseInt(getComputedStyle(submenuButton.parentElement).width) + contentWidth + 10;
     projectContent.style.left = submenuRight > viewportWidth ? `-${contentWidth + 10}px` : `${parseInt(getComputedStyle(submenuButton.parentElement).width) + 10}px`;
 
+    // Create image box with click handler for modal instead of direct link
     const imageBox = document.createElement("div");
     imageBox.className = "content-box image-box";
-    const imageLink = document.createElement("a");
-    imageLink.href = submenuItem.link || "#";
-    imageLink.setAttribute("aria-label", `Visit ${submenuItem.label} webpage`);
     const image = document.createElement("img");
     image.src = submenuItem.image || "default.jpg";
     image.alt = submenuItem.label || "No title";
-    imageLink.appendChild(image);
-    imageBox.appendChild(imageLink);
+    image.className = "project-image-clickable";
+    image.setAttribute("aria-label", `Click to preview ${submenuItem.label}`);
+    
+    // Add click handler to show project modal instead of direct navigation
+    image.addEventListener("click", () => {
+        console.log(`Project image clicked: ${submenuItem.label}`);
+        showProjectModal(submenuItem);
+    });
+    
+    // Add hover effect styling
+    image.style.cursor = "pointer";
+    imageBox.appendChild(image);
     projectContent.appendChild(imageBox);
 
     const summaryBox = document.createElement("div");
@@ -451,6 +477,51 @@ function showContentOverlay(submenuItem) {
     const closeButton = document.createElement("button");
     closeButton.textContent = "Close";
     closeButton.setAttribute("aria-label", "Close content overlay");
+    closeButton.onclick = closeOverlay;
+    overlay.appendChild(closeButton);
+
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.classList.add("active"), 0);
+    toggleBackground(true);
+}
+
+// Project Modal - Shows modal with summary and Visit App button for project cards
+function showProjectModal(submenuItem) {
+    closeOverlay();
+
+    const overlay = document.createElement("div");
+    overlay.className = "content-overlay project-modal";
+
+    const image = document.createElement("img");
+    image.src = submenuItem.image || "default.jpg";
+    image.alt = submenuItem.label || "No title";
+    overlay.appendChild(image);
+
+    const title = document.createElement("h3");
+    title.textContent = submenuItem.label || "No title";
+    overlay.appendChild(title);
+
+    // Show summary for projects instead of full description
+    const summary = document.createElement("p");
+    summary.className = "project-summary";
+    summary.innerHTML = submenuItem.summary || "No summary available";
+    overlay.appendChild(summary);
+
+    // Add Visit App button for projects
+    if (submenuItem.link) {
+        const visitButton = document.createElement("a");
+        visitButton.href = submenuItem.link;
+        visitButton.className = "visit-app-button";
+        visitButton.textContent = "Visit App";
+        visitButton.setAttribute("aria-label", `Visit ${submenuItem.label} application`);
+        visitButton.target = "_blank"; // Open in new tab
+        overlay.appendChild(visitButton);
+    }
+
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "Close";
+    closeButton.className = "close-modal-button";
+    closeButton.setAttribute("aria-label", "Close project modal");
     closeButton.onclick = closeOverlay;
     overlay.appendChild(closeButton);
 
