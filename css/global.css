@@ -781,3 +781,600 @@ footer p {
         padding: 15px;
     }
 }
+
+/* ======================
+   NdaY'Ben'Tanàna Modal Styles
+   ====================== */
+
+.nday-bentanana-modal {
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #2eaaa4 0%, #37aab3 100%);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nday-modal-container {
+    padding: 0;
+    color: #fff;
+}
+
+.nday-modal-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-project-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.modal-title-section {
+    flex: 1;
+}
+
+.modal-title-section h2 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.modal-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+}
+
+.close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.nday-modal-content {
+    padding: 0;
+}
+
+/* Modal Tabs */
+.modal-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-family: 'LuluFontTH', 'Lulu', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom-color: #03eaf6;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Municipality Info */
+.municipality-info h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.info-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.info-item strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #03eaf6;
+}
+
+/* Recent Activities */
+.recent-activities h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+.activity-date {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 80px;
+}
+
+.activity-type {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 80px;
+    text-align: center;
+}
+
+.activity-type.payment {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.activity-type.service {
+    background: #2196F3;
+    color: #fff;
+}
+
+.activity-type.registration {
+    background: #FF9800;
+    color: #fff;
+}
+
+.activity-desc {
+    flex: 1;
+    color: #fff;
+}
+
+.activity-amount {
+    font-weight: bold;
+    color: #03eaf6;
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.service-card h4 {
+    color: #03eaf6;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.service-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.feature-tag {
+    background: rgba(3, 234, 246, 0.2);
+    color: #03eaf6;
+    padding: 3px 8px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(3, 234, 246, 0.3);
+}
+
+.service-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.stat-card h4 {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #03eaf6;
+}
+
+/* Demo Section */
+.demo-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.demo-login h4 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.demo-user-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.demo-btn {
+    padding: 12px 24px;
+    border: 2px solid #03eaf6;
+    background: rgba(3, 234, 246, 0.1);
+    color: #03eaf6;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'LuluFontTH', 'Lulu', sans-serif;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.demo-btn:hover {
+    background: #03eaf6;
+    color: #2eaaa4;
+}
+
+.demo-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Citizen Demo */
+.demo-citizen h4 {
+    color: #03eaf6;
+    margin-bottom: 15px;
+}
+
+.citizen-properties h5 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.property-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.property-card.paid {
+    background: rgba(76, 175, 80, 0.2);
+    border-left-color: #4CAF50;
+}
+
+.property-card.unpaid {
+    background: rgba(244, 67, 54, 0.2);
+    border-left-color: #f44336;
+}
+
+.property-info strong {
+    color: #fff;
+    display: block;
+}
+
+.property-id {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.property-tax {
+    text-align: center;
+}
+
+.tax-amount {
+    display: block;
+    font-weight: bold;
+    color: #fff;
+}
+
+.tax-status {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.tax-status.paid {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.tax-status.unpaid {
+    background: #f44336;
+    color: #fff;
+}
+
+.pay-btn {
+    padding: 8px 16px;
+    background: #03eaf6;
+    color: #2eaaa4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.pay-btn:hover {
+    background: #02d1dc;
+}
+
+.pay-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pay-btn.paid {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.paid-check {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Mayor Demo */
+.demo-mayor h4 {
+    color: #03eaf6;
+    margin-bottom: 15px;
+}
+
+.overview-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.overview-stat {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.overview-stat h5 {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.overview-stat span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #03eaf6;
+}
+
+.property-list h5 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.property-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 120px 100px 80px;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.property-row.paid {
+    border-left: 3px solid #4CAF50;
+}
+
+.property-row.unpaid {
+    border-left: 3px solid #f44336;
+}
+
+.prop-id {
+    font-weight: bold;
+    color: #03eaf6;
+}
+
+.prop-address, .prop-owner, .prop-amount {
+    color: #fff;
+}
+
+.prop-status {
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.prop-status.paid {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.prop-status.unpaid {
+    background: #f44336;
+    color: #fff;
+}
+
+/* Modal Footer */
+.nday-modal-footer {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nday-modal-footer p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 5px 0;
+}
+
+.testimony-source {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.external-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #03eaf6;
+    color: #2eaaa4;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.external-link:hover {
+    background: #02d1dc;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design for Modal */
+@media (max-width: 768px) {
+    .nday-bentanana-modal {
+        max-width: 95%;
+        max-height: 95vh;
+        margin: 2.5vh auto;
+    }
+    
+    .nday-modal-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .modal-tabs {
+        flex-direction: column;
+    }
+    
+    .tab-btn {
+        padding: 10px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .demo-user-buttons {
+        flex-direction: column;
+    }
+    
+    .overview-stats {
+        flex-direction: column;
+    }
+    
+    .property-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        text-align: center;
+    }
+    
+    .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .property-card {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+}

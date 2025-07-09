@@ -230,11 +230,21 @@ function initializeHorizontalMenu() {
             if (menuItem.label === "Projects") {
                 submenuButton.addEventListener("click", () => {
                     console.log(`Clicked Projects: ${submenuItem.label}`);
+                    // Special handling for NdaY'Ben'Tanàna - show interactive modal
+                    if (submenuItem.label === "NdaY' Ben'ny Tanàna") {
+                        showNdayBenTananaModal();
+                        return;
+                    }
                     updateProjectContent(submenuItem, projectContent, submenuButton);
                     toggleBackground(true);
                 });
                 submenuButton.addEventListener("mouseenter", () => {
                     console.log(`Hovered Projects: ${submenuItem.label}`);
+                    // Special handling for NdaY'Ben'Tanàna - show interactive modal on hover
+                    if (submenuItem.label === "NdaY' Ben'ny Tanàna") {
+                        showNdayBenTananaModal();
+                        return;
+                    }
                     updateProjectContent(submenuItem, projectContent, submenuButton);
                     toggleBackground(true);
                 });
@@ -478,6 +488,294 @@ function addGlobalClickListener() {
         }
     });
 }
+
+// NdaY'Ben'Tanàna Interactive Modal
+function showNdayBenTananaModal() {
+    // Close any existing overlay first
+    closeOverlay();
+
+    const overlay = document.createElement("div");
+    overlay.className = "content-overlay nday-bentanana-modal";
+
+    // Check if mock data is available
+    if (typeof ndayBenTananaMockData === 'undefined') {
+        console.error("NdaY'Ben'Tanàna mock data not loaded");
+        overlay.innerHTML = `
+            <div class="nday-modal-container">
+                <h2>NdaY' Ben'ny Tanàna</h2>
+                <p>Loading platform data...</p>
+                <button onclick="closeOverlay()" class="close-btn">Close</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        setTimeout(() => overlay.classList.add("active"), 0);
+        return;
+    }
+
+    const mockData = ndayBenTananaMockData;
+    
+    overlay.innerHTML = `
+        <div class="nday-modal-container">
+            <div class="nday-modal-header">
+                <img src="./assets/images/Projects/NdaY_Ben_Tanana.png" alt="NdaY' Ben'ny Tanàna" class="modal-project-image">
+                <div class="modal-title-section">
+                    <h2>NdaY' Ben'ny Tanàna</h2>
+                    <p class="modal-subtitle">Municipal Digital Governance Platform</p>
+                </div>
+                <button onclick="closeOverlay()" class="close-btn" aria-label="Close modal">×</button>
+            </div>
+
+            <div class="nday-modal-content">
+                <!-- Navigation Tabs -->
+                <div class="modal-tabs">
+                    <button class="tab-btn active" onclick="switchNdayTab('overview')">Overview</button>
+                    <button class="tab-btn" onclick="switchNdayTab('services')">Services</button>
+                    <button class="tab-btn" onclick="switchNdayTab('statistics')">Statistics</button>
+                    <button class="tab-btn" onclick="switchNdayTab('demo')">Live Demo</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="modal-tab-content">
+                    <!-- Overview Tab -->
+                    <div id="nday-tab-overview" class="tab-content active">
+                        <div class="municipality-info">
+                            <h3>Municipality Information</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <strong>Municipality:</strong> ${mockData.municipality.name}
+                                </div>
+                                <div class="info-item">
+                                    <strong>Mayor:</strong> ${mockData.municipality.mayor}
+                                </div>
+                                <div class="info-item">
+                                    <strong>Total Properties:</strong> ${mockData.municipality.totalProperties}
+                                </div>
+                                <div class="info-item">
+                                    <strong>Total Taxpayers:</strong> ${mockData.municipality.totalTaxpayers}
+                                </div>
+                                <div class="info-item">
+                                    <strong>Collection Rate:</strong> ${mockData.municipality.collectionRate}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="recent-activities">
+                            <h3>Recent Activities</h3>
+                            ${mockData.recentActivities.map(activity => `
+                                <div class="activity-item">
+                                    <span class="activity-date">${activity.date}</span>
+                                    <span class="activity-type ${activity.type}">${activity.type.toUpperCase()}</span>
+                                    <span class="activity-desc">${activity.description}</span>
+                                    <span class="activity-amount">${activity.amount}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Services Tab -->
+                    <div id="nday-tab-services" class="tab-content">
+                        <h3>Available Services</h3>
+                        <div class="services-grid">
+                            ${Object.values(mockData.services).map(service => `
+                                <div class="service-card">
+                                    <h4>${service.name}</h4>
+                                    <p>${service.description}</p>
+                                    <div class="service-features">
+                                        ${service.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                                    </div>
+                                    <div class="service-details">
+                                        <span><strong>Processing:</strong> ${service.processingTime}</span>
+                                        <span><strong>Cost:</strong> ${service.cost}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Statistics Tab -->
+                    <div id="nday-tab-statistics" class="tab-content">
+                        <h3>Platform Statistics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>Total Users</h4>
+                                <span class="stat-number">${mockData.statistics.totalUsers}</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Transactions</h4>
+                                <span class="stat-number">${mockData.statistics.totalTransactions}</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Revenue</h4>
+                                <span class="stat-number">${mockData.statistics.totalRevenue}</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Digital Adoption</h4>
+                                <span class="stat-number">${mockData.statistics.digitalAdoptionRate}</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Avg Processing Time</h4>
+                                <span class="stat-number">${mockData.statistics.averageProcessingTime}</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>User Satisfaction</h4>
+                                <span class="stat-number">${mockData.statistics.userSatisfactionRate}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Demo Tab -->
+                    <div id="nday-tab-demo" class="tab-content">
+                        <h3>Interactive Demo</h3>
+                        <div class="demo-section">
+                            <div class="demo-login">
+                                <h4>Select User Type:</h4>
+                                <div class="demo-user-buttons">
+                                    <button onclick="showDemoUser('citizen')" class="demo-btn citizen-btn">Citizen Portal</button>
+                                    <button onclick="showDemoUser('mayor')" class="demo-btn mayor-btn">Mayor Dashboard</button>
+                                </div>
+                            </div>
+                            <div id="demo-content" class="demo-content">
+                                <p>Select a user type above to explore the platform features.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nday-modal-footer">
+                <p><em>"Tato an-trano dia efa nahazo dika mitovy ny fanamarinam-pahaterahana!"</em></p>
+                <p class="testimony-source">- Ingahy Solo Lehibe, Ben'ny Tanàna</p>
+                <a href="https://nday.mg/nday_bentanana" target="_blank" class="external-link">Visit Live Platform</a>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.classList.add("active"), 0);
+    toggleBackground(true);
+}
+
+// Tab switching function for NdaY'Ben'Tanàna modal
+function switchNdayTab(tabName) {
+    // Remove active class from all tabs and content
+    document.querySelectorAll('.modal-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    
+    // Add active class to clicked tab and corresponding content
+    event.target.classList.add('active');
+    document.getElementById(`nday-tab-${tabName}`).classList.add('active');
+}
+
+// Demo user type selection
+function showDemoUser(userType) {
+    const demoContent = document.getElementById('demo-content');
+    const mockData = ndayBenTananaMockData;
+    
+    if (userType === 'citizen') {
+        const citizen = mockData.taxpayers[0]; // Use first citizen with multiple properties
+        demoContent.innerHTML = `
+            <div class="demo-citizen">
+                <h4>Citizen Portal - ${citizen.name}</h4>
+                <div class="citizen-properties">
+                    <h5>Your Properties & Tax Status:</h5>
+                    ${citizen.properties.map(property => `
+                        <div class="property-card ${property.status}">
+                            <div class="property-info">
+                                <strong>${property.address}</strong>
+                                <span class="property-id">${property.id}</span>
+                            </div>
+                            <div class="property-tax">
+                                <span class="tax-amount">${property.taxAmount.toLocaleString()} Ar</span>
+                                <span class="tax-status ${property.status}">${property.status.toUpperCase()}</span>
+                            </div>
+                            ${property.status === 'unpaid' ? 
+                                `<button class="pay-btn" onclick="simulatePayment('${property.id}')">Pay Now</button>` : 
+                                '<span class="paid-check">✓ Paid</span>'
+                            }
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    } else if (userType === 'mayor') {
+        demoContent.innerHTML = `
+            <div class="demo-mayor">
+                <h4>Mayor Dashboard - ${mockData.municipality.mayor}</h4>
+                <div class="mayor-overview">
+                    <div class="overview-stats">
+                        <div class="overview-stat">
+                            <h5>Properties</h5>
+                            <span>${mockData.municipality.totalProperties}</span>
+                        </div>
+                        <div class="overview-stat">
+                            <h5>Taxpayers</h5>
+                            <span>${mockData.municipality.totalTaxpayers}</span>
+                        </div>
+                        <div class="overview-stat">
+                            <h5>Collection Rate</h5>
+                            <span>${mockData.municipality.collectionRate}</span>
+                        </div>
+                    </div>
+                    <div class="property-list">
+                        <h5>All Properties:</h5>
+                        ${mockData.taxpayers.flatMap(taxpayer => 
+                            taxpayer.properties.map(property => `
+                                <div class="property-row ${property.status}">
+                                    <span class="prop-id">${property.id}</span>
+                                    <span class="prop-address">${property.address}</span>
+                                    <span class="prop-owner">${taxpayer.name}</span>
+                                    <span class="prop-amount">${property.taxAmount.toLocaleString()} Ar</span>
+                                    <span class="prop-status ${property.status}">${property.status}</span>
+                                </div>
+                            `)
+                        ).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Simulate payment for demo
+function simulatePayment(propertyId) {
+    const button = event.target;
+    button.textContent = 'Processing...';
+    button.disabled = true;
+    
+    setTimeout(() => {
+        button.textContent = '✓ Paid';
+        button.classList.add('paid');
+        const propertyCard = button.closest('.property-card');
+        propertyCard.classList.remove('unpaid');
+        propertyCard.classList.add('paid');
+        const statusSpan = propertyCard.querySelector('.tax-status');
+        statusSpan.textContent = 'PAID';
+        statusSpan.classList.remove('unpaid');
+        statusSpan.classList.add('paid');
+    }, 2000);
+}
+
+// Ensure the closeOverlay function is available globally
+function closeOverlay() {
+    const overlay = document.querySelector(".content-overlay");
+    if (overlay) {
+        overlay.classList.remove("active");
+        setTimeout(() => overlay.remove(), 500); // Match CSS transition
+    }
+    // Also call toggleBackground to restore the background
+    if (typeof toggleBackground === 'function') {
+        toggleBackground(false);
+    } else {
+        // Fallback if toggleBackground is not available globally
+        document.body.classList.remove("hide-background");
+    }
+}
+
+// Make functions globally available
+window.switchNdayTab = switchNdayTab;
+window.showDemoUser = showDemoUser;
+window.simulatePayment = simulatePayment;
+window.closeOverlay = closeOverlay;
 
 // Sticky Header
 function addStickyHeaderBehavior() {
